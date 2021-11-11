@@ -46,7 +46,6 @@ window.onload = async () => {
     await addSamplesToUI(data)
 }
 
-// TODO: add interactive trie search method
 (() => {
     const textInput = document.getElementById("text")
     const searchForm = document.getElementById("search-form")
