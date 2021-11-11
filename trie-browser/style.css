@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.title, .samples-title {
+    text-align: center;
+    padding: 0.5em;
+}
+
+.samples-title {
+    font-size: 1.5rem;
+}
+
+.label {
+    padding: 0 0.5em;
+}
+
+.search{
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+.samples {
+    margin-top: 2%;
+}
+
+.samples-text {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   list-style-type: none;
+}
+
+.sample {
+    padding: 0.5em 0;
+}
+
+.found {
+    color: green;
+}
+
+.not-found {
+    color: initial;
+}
