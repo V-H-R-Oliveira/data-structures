@@ -15,17 +15,19 @@
         <main>
             <h1 class="title">Search a sample</h1>
             <section>
-                <div class="search">
-                    <form id="search-form">
-                        <label class="label" for="text">Type something:</label>
-                        <input type="text" id="text" placeholder="type your text here" />
+                <div class="search mt-2">
+                    <form class="search-form" id="search-form">
+                        <div class="form-group">
+                            <input type="text" id="text" class="input" placeholder="type your text here" />
+                        </div>
+                        <button class="btn-search" type="submit">Search</button>
                     </form>
 
                 </div>
             </section>
 
-            <section class="samples">
-                <h3 class="samples-title">Available sample</h3>
+            <section class="mt-2">
+                <h3 class="samples-title">Available samples</h3>
                 <ul class="samples-text" id="sample-list">
                 </ul>
             </section>
