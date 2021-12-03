@@ -77,11 +77,12 @@ func (heap *MinBinHeap) Poll() *Node {
 	}
 
 	head := heap.Elements[0]
-
-	heap.Elements[0], heap.Elements[len(heap.Elements)-1] = heap.Elements[len(heap.Elements)-1], heap.Elements[0]
-	heap.Elements = heap.Elements[:len(heap.Elements)-1]
-
 	lastIdx := len(heap.Elements) - 1
+
+	heap.Elements[0], heap.Elements[lastIdx] = heap.Elements[lastIdx], heap.Elements[0]
+	heap.Elements = heap.Elements[:lastIdx]
+
+	lastIdx = len(heap.Elements) - 1
 	targetIdx := heap.bubbleDown(0)
 
 	leftChildIdx, rightChildIdx := 2*targetIdx+1, 2*targetIdx+2
