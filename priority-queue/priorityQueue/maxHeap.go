@@ -5,25 +5,25 @@ import (
 	"fmt"
 )
 
-type MinBinHeap struct {
+type MaxBinHeap struct {
 	Elements []*Node
 }
 
-func NewMinHeap() IHeap {
-	return &MinBinHeap{
+func NewMaxHeap() IHeap {
+	return &MaxBinHeap{
 		Elements: []*Node{},
 	}
 }
 
-func (heap *MinBinHeap) ShouldBubbleDown(left, right *Node) bool {
-	return left.Value <= right.Value
+func (heap *MaxBinHeap) ShouldBubbleUp(source, target *Node) bool {
+	return target.Value > source.Value
 }
 
-func (heap *MinBinHeap) ShouldBubbleUp(source, target *Node) bool {
-	return source.Value > target.Value
+func (heap *MaxBinHeap) ShouldBubbleDown(left, right *Node) bool {
+	return left.Value >= right.Value
 }
 
-func (heap *MinBinHeap) Insert(node *Node) error {
+func (heap *MaxBinHeap) Insert(node *Node) error {
 	if heap.IsEmpty() {
 		heap.Elements = append(heap.Elements, node)
 		return nil
@@ -36,7 +36,7 @@ func (heap *MinBinHeap) Insert(node *Node) error {
 	return nil
 }
 
-func (heap *MinBinHeap) Poll() *Node {
+func (heap *MaxBinHeap) Poll() *Node {
 	if heap.IsEmpty() {
 		return nil
 	}
@@ -57,10 +57,10 @@ func (heap *MinBinHeap) Poll() *Node {
 		needBubbleUpRight := false
 
 		if rightChildIdx <= lastIdx {
-			needBubbleUpRight = heap.Elements[targetIdx].Value > heap.Elements[rightChildIdx].Value
+			needBubbleUpRight = heap.Elements[targetIdx].Value < heap.Elements[rightChildIdx].Value
 		}
 
-		if heap.Elements[targetIdx].Value > heap.Elements[leftChildIdx].Value {
+		if heap.Elements[targetIdx].Value < heap.Elements[leftChildIdx].Value {
 			bubbleUp(heap, heap.Elements[leftChildIdx], leftChildIdx)
 		} else if needBubbleUpRight {
 			bubbleUp(heap, heap.Elements[rightChildIdx], rightChildIdx)
@@ -70,15 +70,7 @@ func (heap *MinBinHeap) Poll() *Node {
 	return head
 }
 
-func (heap *MinBinHeap) Peak() *Node {
-	if heap.IsEmpty() {
-		return nil
-	}
-
-	return heap.Elements[0]
-}
-
-func (heap *MinBinHeap) Remove(node *Node) error {
+func (heap *MaxBinHeap) Remove(node *Node) error {
 	if heap.IsEmpty() {
 		return errors.New("the heap is empty")
 	}
@@ -104,10 +96,10 @@ func (heap *MinBinHeap) Remove(node *Node) error {
 		needBubbleDownRight := false
 
 		if rightChildIdx <= lastIdx {
-			needBubbleDownRight = heap.Elements[targetIdx].Value > heap.Elements[rightChildIdx].Value
+			needBubbleDownRight = heap.Elements[targetIdx].Value < heap.Elements[rightChildIdx].Value
 		}
 
-		needBubbleDownLeft := heap.Elements[targetIdx].Value > heap.Elements[leftChildIdx].Value
+		needBubbleDownLeft := heap.Elements[targetIdx].Value < heap.Elements[leftChildIdx].Value
 
 		if needBubbleDownLeft || needBubbleDownRight {
 			bubbleDown(heap, targetIdx)
@@ -117,11 +109,27 @@ func (heap *MinBinHeap) Remove(node *Node) error {
 	return nil
 }
 
-func (heap *MinBinHeap) IsEmpty() bool {
+func (heap *MaxBinHeap) GetElements() []*Node {
+	return heap.Elements
+}
+
+func (heap *MaxBinHeap) Size() int {
+	return len(heap.Elements)
+}
+
+func (heap *MaxBinHeap) IsEmpty() bool {
 	return len(heap.Elements) == 0
 }
 
-func (heap *MinBinHeap) Print() {
+func (heap *MaxBinHeap) Peak() *Node {
+	if heap.IsEmpty() {
+		return nil
+	}
+
+	return heap.Elements[0]
+}
+
+func (heap *MaxBinHeap) Print() {
 	if heap.IsEmpty() {
 		return
 	}
@@ -131,12 +139,4 @@ func (heap *MinBinHeap) Print() {
 	}
 
 	fmt.Println()
-}
-
-func (heap *MinBinHeap) Size() int {
-	return len(heap.Elements)
-}
-
-func (heap *MinBinHeap) GetElements() []*Node {
-	return heap.Elements
 }

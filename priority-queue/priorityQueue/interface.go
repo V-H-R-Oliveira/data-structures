@@ -10,3 +10,9 @@ type IHeap interface {
 	GetElements() []*Node
 	Peak() *Node
 }
+
+type BinHeap interface {
+	IHeap
+	ShouldBubbleUp(*Node, *Node) bool
+	ShouldBubbleDown(*Node, *Node) bool
+}

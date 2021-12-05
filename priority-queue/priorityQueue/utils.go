@@ -18,7 +18,7 @@ func findByIndex(heap IHeap, target *Node) int {
 	return -1
 }
 
-func bubbleDown(heap IHeap, targetIdx int) int {
+func bubbleDown(heap BinHeap, targetIdx int) int {
 	heapElements := heap.GetElements()
 	current, last := targetIdx, len(heapElements)-1
 
@@ -31,7 +31,7 @@ func bubbleDown(heap IHeap, targetIdx int) int {
 
 		left, right := heapElements[leftIdx], heapElements[rightIdx]
 
-		if left.Value <= right.Value {
+		if heap.ShouldBubbleDown(left, right) {
 			heapElements[current], heapElements[leftIdx] = heapElements[leftIdx], heapElements[current]
 			current = leftIdx
 		} else {
@@ -43,7 +43,7 @@ func bubbleDown(heap IHeap, targetIdx int) int {
 	return current
 }
 
-func bubbleUp(heap IHeap, target *Node, targetIdx int) int {
+func bubbleUp(heap BinHeap, target *Node, targetIdx int) int {
 	heapElements := heap.GetElements()
 	currentIdx, adjustedIdx := targetIdx, targetIdx
 
@@ -51,7 +51,7 @@ func bubbleUp(heap IHeap, target *Node, targetIdx int) int {
 		parentIdx := int(math.Round(float64(currentIdx)/2) - 1)
 		parent := heapElements[parentIdx]
 
-		if parent.Value > target.Value {
+		if heap.ShouldBubbleUp(parent, target) {
 			heapElements[parentIdx], heapElements[currentIdx] = heapElements[currentIdx], heapElements[parentIdx]
 			adjustedIdx = currentIdx
 		}

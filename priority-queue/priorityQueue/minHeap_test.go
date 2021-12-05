@@ -5,10 +5,10 @@ import (
 	"testing"
 )
 
-func TestMinHeap(t *testing.T) {
+func TestMinBinHeap(t *testing.T) {
 	t.Run("Test isEmpty", func(t *testing.T) {
 		t.Run("Given an empty heap, it should return true", func(t *testing.T) {
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			if !heap.IsEmpty() {
 				t.Error("Expected an empty heap, got a filled heap")
@@ -17,7 +17,7 @@ func TestMinHeap(t *testing.T) {
 
 		t.Run("Given a fulfilled heap, it should return false", func(t *testing.T) {
 			values := []int{1, 5, 1, 8, 6, 2, 2, 13, 12, 11, 7, 2, 15, 3, 10}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -32,7 +32,7 @@ func TestMinHeap(t *testing.T) {
 	t.Run("Test Insert", func(t *testing.T) {
 		t.Run("Given an input, the new heap should have the same length as the input after", func(t *testing.T) {
 			values := []int{1, 5, 1, 8, 6, 2, 2, 13, 12, 11, 7, 2, 15, 3, 10}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -50,7 +50,7 @@ func TestMinHeap(t *testing.T) {
 	t.Run("Test heap invariance property", func(t *testing.T) {
 		t.Run("Test #1", func(t *testing.T) {
 			values := []int{1, 5, 1, 8, 6, 2, 2, 13, 12, 11, 7, 2, 15, 3, 10}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -58,9 +58,9 @@ func TestMinHeap(t *testing.T) {
 
 			heapValues := heap.GetElements()
 
-			for i, value := range heapValues {
-				if value.Value != values[i] {
-					t.Errorf("Expected %d, got %d\n", values[i], value.Value)
+			for i, node := range heapValues {
+				if node.Value != values[i] {
+					t.Errorf("Expected %d, got %d\n", values[i], node.Value)
 					break
 				}
 			}
@@ -68,7 +68,7 @@ func TestMinHeap(t *testing.T) {
 
 		t.Run("Test #2", func(t *testing.T) {
 			values := []int{4, 5, 1, 0, 2, 3, 10, 9, 8}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -78,9 +78,9 @@ func TestMinHeap(t *testing.T) {
 
 			heapValues := heap.GetElements()
 
-			for i, value := range heapValues {
-				if value.Value != expected[i] {
-					t.Errorf("Expected %d, got %d\n", expected[i], value.Value)
+			for i, node := range heapValues {
+				if node.Value != expected[i] {
+					t.Errorf("Expected %d, got %d\n", expected[i], node.Value)
 					break
 				}
 			}
@@ -88,7 +88,7 @@ func TestMinHeap(t *testing.T) {
 
 		t.Run("Test #3", func(t *testing.T) {
 			values := []int{1, -5, 0, 3, 15, 11, 7, -2, 4}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -98,9 +98,9 @@ func TestMinHeap(t *testing.T) {
 
 			heapValues := heap.GetElements()
 
-			for i, value := range heapValues {
-				if value.Value != expected[i] {
-					t.Errorf("Expected %d, got %d\n", expected[i], value.Value)
+			for i, node := range heapValues {
+				if node.Value != expected[i] {
+					t.Errorf("Expected %d, got %d\n", expected[i], node.Value)
 					break
 				}
 			}
@@ -108,7 +108,7 @@ func TestMinHeap(t *testing.T) {
 
 		t.Run("Test #4", func(t *testing.T) {
 			values := []int{10, 1, 0, -1, -1, 2, 3, 100, 55, 2, 20, 40}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -118,9 +118,9 @@ func TestMinHeap(t *testing.T) {
 
 			heapValues := heap.GetElements()
 
-			for i, value := range heapValues {
-				if value.Value != expected[i] {
-					t.Errorf("Expected %d, got %d\n", expected[i], value.Value)
+			for i, node := range heapValues {
+				if node.Value != expected[i] {
+					t.Errorf("Expected %d, got %d\n", expected[i], node.Value)
 					break
 				}
 			}
@@ -130,7 +130,7 @@ func TestMinHeap(t *testing.T) {
 	t.Run("Test Poll", func(t *testing.T) {
 		t.Run("It should return the heap head", func(t *testing.T) {
 			values := []int{4, 5, 1, 0, 2, 3, 10, 9, 8}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -146,7 +146,7 @@ func TestMinHeap(t *testing.T) {
 
 		t.Run("It should return the heap head #2", func(t *testing.T) {
 			values := []int{4, 5, 1, 0, 2, 3, 10, 9, 8}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -164,7 +164,7 @@ func TestMinHeap(t *testing.T) {
 
 		t.Run("It should return the heap head #3", func(t *testing.T) {
 			values := []int{1, 1, 0, 3, 4}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -226,7 +226,7 @@ func TestMinHeap(t *testing.T) {
 		})
 
 		t.Run("It should return nil when the heap is empty", func(t *testing.T) {
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 			got := heap.Poll()
 
 			if got != nil {
@@ -237,7 +237,7 @@ func TestMinHeap(t *testing.T) {
 
 	t.Run("Test Remove", func(t *testing.T) {
 		t.Run("It should return an error when the heap is empty", func(t *testing.T) {
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 			err := heap.Remove(priorityqueue.NewNode(2))
 
 			if err == nil {
@@ -246,7 +246,7 @@ func TestMinHeap(t *testing.T) {
 		})
 
 		t.Run("It should return an error when trying to remove an inexistent node", func(t *testing.T) {
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 			heap.Insert(priorityqueue.NewNode(4))
 
 			err := heap.Remove(priorityqueue.NewNode(2))
@@ -258,7 +258,7 @@ func TestMinHeap(t *testing.T) {
 
 		t.Run("Test #1", func(t *testing.T) {
 			values := []int{3, 1, 0, 10, 11, 2, 4, -1}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -267,7 +267,7 @@ func TestMinHeap(t *testing.T) {
 			err := heap.Remove(priorityqueue.NewNode(0))
 
 			if err != nil {
-				t.Fatal("Failed due", err)
+				t.Fatalf("Expected a nil error, got %v\n", err)
 			}
 
 			expectedHeap := []int{-1, 3, 1, 10, 11, 2, 4}
@@ -283,7 +283,7 @@ func TestMinHeap(t *testing.T) {
 
 		t.Run("Test #2", func(t *testing.T) {
 			values := []int{3, 1, 0, 10, 11, 2, 4, -1}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -316,7 +316,7 @@ func TestMinHeap(t *testing.T) {
 
 		t.Run("Test #3", func(t *testing.T) {
 			values := []int{3, 1, 0, -2, 10, 11, 2, 4, -1, 5, 7, 6}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -362,7 +362,7 @@ func TestMinHeap(t *testing.T) {
 	t.Run("Test Peek", func(t *testing.T) {
 		t.Run("I should return the head without remove it", func(t *testing.T) {
 			values := []int{3, 1, 0, -2, 10, 11, 2, 4, -1, 5, 7, 6}
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 
 			for _, value := range values {
 				heap.Insert(priorityqueue.NewNode(value))
@@ -384,7 +384,7 @@ func TestMinHeap(t *testing.T) {
 		})
 
 		t.Run("It should return nil when the heap is empty", func(t *testing.T) {
-			heap := priorityqueue.NewHeap()
+			heap := priorityqueue.NewMinHeap()
 			head := heap.Peak()
 
 			if head != nil {
