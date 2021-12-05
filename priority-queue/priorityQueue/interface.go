@@ -1,6 +1,6 @@
 package priorityqueue
 
-type PriorityQueue interface {
+type IHeap interface {
 	Insert(*Node) error
 	Poll() *Node
 	Remove(*Node) error
