@@ -27,7 +27,6 @@ def naive_search(string: str, pattern: str):
 
     return False
 
-# TODO: refactor this after validate that it works
 # Builds the state machine for efficient pattern matching
 def build_pattern_table(pattern: str):
     pattern_length = len(pattern)
