@@ -28,7 +28,7 @@ func NewHashMap(initialSize uint64) (*HashMap, error) {
 		list:     make([]*Entry, initialSize),
 		size:     initialSize,
 		occupied: 0,
-		maxLoad:  initialSize - (initialSize >> 2), //initialSize * 3 / 4,
+		maxLoad:  initialSize * 3 / 4,
 		seed:     maphash.MakeSeed(),
 	}, nil
 }
@@ -42,8 +42,7 @@ func (h *HashMap) rehash() {
 	h.size <<= 1
 	h.list = make([]*Entry, h.size)
 	h.occupied = 0
-	// h.maxLoad = h.size * 3 / 4
-	h.maxLoad = h.size - (h.size >> 2)
+	h.maxLoad = h.size * 3 / 4
 
 	for _, entry := range oldList {
 		if entry != nil {
@@ -81,7 +80,6 @@ func (h *HashMap) Put(key, value string) error {
 
 	for probe := range h.size {
 		i := (idx + probe) & (h.size - 1)
-
 		entry := h.list[i]
 
 		if entry == nil {
